@@ -3,6 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.3"
 
+gem 'kuby-core',          '~> 0.16.0.a',  github: 'kingdonb/kuby-core'
+gem 'kube-dsl',           '~> 0.7.0',     github: 'kingdonb/kube-dsl'
+gem 'kuby-cert-manager',  '~> 0.4.0',     github: 'kingdonb/kuby-cert-manager'
+
+gem 'prebundler',         '~> 0.13.0.a',  github: 'kingdonb/prebundler'
+gem 'webrick'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.0"
 
