@@ -2,7 +2,7 @@ require 'active_support/core_ext'
 require 'active_support/encrypted_configuration'
 
 # Define a production Kuby deploy environment
-Kuby.define('Scrob/Web') do
+Kuby.define('Scrob') do
   environment(:production) do
     # Because the Rails environment isn't always loaded when
     # your Kuby config is loaded, provide access to Rails

@@ -15,9 +15,9 @@ GIT
 
 GIT
   remote: https://github.com/kingdonb/kuby-core.git
-  revision: 323a4326cd54e295b4ace91e3d795c5cee4e8a9b
+  revision: 56a0b7ca91a200dff4a0835f84e84f1677914d38
   specs:
-    kuby-core (0.16.0.pre.alpha9)
+    kuby-core (0.16.0.pre.alpha11)
       colorize (~> 0.8)
       docker-remote (~> 0.6)
       gli (~> 2.0)
@@ -33,9 +33,9 @@ GIT
 
 GIT
   remote: https://github.com/kingdonb/prebundler.git
-  revision: 7f4fff4fcefe3e606c5dbc341c82309a3412de6a
+  revision: 067aa9eb3c1da6509400fc2181ae113d80ba26af
   specs:
-    prebundler (0.13.0.pre.alpha3)
+    prebundler (0.13.0.pre.alpha5)
       aws-sdk (~> 2.0)
       bundler
       gli (~> 2.0)
@@ -362,4 +362,4 @@ RUBY VERSION
    ruby 3.0.3p157
 
 BUNDLED WITH
-   2.2.32
+   2.3.4
