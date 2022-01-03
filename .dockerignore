@@ -11,4 +11,5 @@ public/assets
 config/master.key
 manifests/Dockerfile*
 manifests/k8s.yml
+manifests/secret.yaml
 .env*

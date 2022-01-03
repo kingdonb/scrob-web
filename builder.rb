@@ -36,7 +36,7 @@ if 0 == @last_exit_status && @stderr == ""
 
   # If it is a Secret, it needs special handling with SOPS for
   # encryption (or we should throw it away, for now)
-  secrets = ''
+  secret_yaml_document_text = secrets.map(&:to_yaml).join
 
   # If it is any other resource, it can go in manifests/k8s.yml
   # and be part of the base deployment
@@ -44,6 +44,7 @@ if 0 == @last_exit_status && @stderr == ""
 
   # Write the manifest file out
   File.open('manifests/k8s.yml', 'w') { |file| file.write(manifest_yaml_document_text) }
+  File.open('manifests/secret.yaml', 'w') { |file| file.write(secret_yaml_document_text) }
 else
   puts @stderr
   Kernel.exit(@last_exit_status)
