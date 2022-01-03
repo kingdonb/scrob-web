@@ -7,6 +7,8 @@ on:
 jobs:
   builder:
     runs-on: self-hosted
+    env:
+      RUBY_VERSION: 3.0.3
 
     steps:
     - uses: actions/checkout@v2
@@ -18,20 +20,17 @@ jobs:
         username: ${{ secrets.HARBOR_BOT_USER }}
         password: ${{ secrets.HARBOR_BOT_PASSWORD }}
 
-    - name: rvm use (invoke .ruby-version)
-      run: source /home/kingdon/.rvm/scripts/rvm && rvm use
-
   # prebundler is: github.com/kingdonb/prebundler
   # (forked from github.com/camertron/prebundler)
     - name: Pre-cache dependencies
-      run: rvm 3.0.3 do prebundle install
+      run: rvm ${{ env.RUBY_VERSION }} do prebundle install
       env:
         MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
         MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
     - name: Verify dependencies
-      run: bundle check
+      run: rvm ${{ env.RUBY_VERSION }} do bundle check
 
     - name: Set time zone to UTC properly
       uses: szenius/set-timezone@v1.0
@@ -41,7 +40,7 @@ jobs:
   # Build and push at once to allow "app" and "assets" to build as separate but
   # dependently (quirk of using docker buildx, if not then you can omit --push)
     - name: Kuby build/push app image
-      run: bundle exec kuby -e production build --only app --
+      run: rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e production build --only app --
         --build-arg=MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}
         --build-arg=MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}
         --push
@@ -51,7 +50,7 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
     - name: Kuby build/push assets image
-      run: bundle exec kuby -e production build --only assets --
+      run: rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e production build --only assets --
         --build-arg=MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}
         --build-arg=MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}
         --push
