@@ -126,7 +126,7 @@ metadata:
   name: scrob-ingress
   namespace: scrob-production
 spec:
-  ingressClassName: traefik
+  ingressClassName: public
   rules:
   - host: scrob.hephy.pro
     http:
@@ -286,18 +286,3 @@ spec:
       - configMap:
           name: scrob-assets-nginx-config
         name: nginx-config
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-production
-  namespace: cert-manager
-spec:
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-production
-    solvers:
-    - http01:
-        ingress:
-          class: nginx

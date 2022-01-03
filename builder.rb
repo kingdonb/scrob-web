@@ -34,6 +34,12 @@ if 0 == @last_exit_status && @stderr == ""
   # Filter any secrets and regular manifests into separate partitions
   secrets, manifests = array.partition { |x| x["kind"] == "Secret" }
 
+  cluster_issuers, manifests =
+    manifests.partition { |x| x["kind"] == "ClusterIssuer" }
+
+  # Discard the cluster issuer since we will be operating as a tenant
+  cluster_issuers = ''
+
   # If it is a Secret, it needs special handling with SOPS for
   # encryption (or we should throw it away, for now)
   secret_yaml_document_text = secrets.map(&:to_yaml).join

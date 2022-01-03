@@ -32,7 +32,7 @@ Kuby.define('Scrob') do
         hostname 'scrob.hephy.pro'
 
         manage_database false
-        ingress_class 'traefik'
+        ingress_class 'public'
       end
     end
   end
