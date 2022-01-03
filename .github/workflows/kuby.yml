@@ -19,7 +19,7 @@ jobs:
         password: ${{ secrets.HARBOR_BOT_PASSWORD }}
 
     - name: rvm use (invoke .ruby-version)
-      run: rvm use
+      run: source /home/kingdon/.rvm/scripts/rvm && rvm use
 
   # prebundler is: github.com/kingdonb/prebundler
   # (forked from github.com/camertron/prebundler)
