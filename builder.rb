@@ -41,11 +41,11 @@ if 0 == @last_exit_status && @stderr == ""
   cluster_issuers = ''
 
   # If it is a Secret, it needs special handling with SOPS for
-  # encryption (or we should throw it away, for now)
+  # encryption (or we should throw it away, for now with gitignore)
   secret_yaml_document_text = secrets.map(&:to_yaml).join
 
   # If it is any other resource, it can go in manifests/k8s.yml
-  # and be part of the base deployment
+  # (not a secret and is a namespaced resource in our namespace)
   manifest_yaml_document_text = manifests.map(&:to_yaml).join
 
   # Write the manifest file out
