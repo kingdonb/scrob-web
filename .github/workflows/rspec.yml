@@ -1,0 +1,48 @@
+name: Kuby build and push manifests
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  rspec:
+    name: RSpec Tester
+    runs-on: self-hosted
+    env:
+      RUBY_VERSION: 3.0.3
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to Harbor (img.hephy.pro)
+      uses: docker/login-action@v1
+      with:
+        registry: img.hephy.pro
+        username: ${{ secrets.HARBOR_BOT_USER }}
+        password: ${{ secrets.HARBOR_BOT_PASSWORD }}
+
+  # prebundler is: github.com/kingdonb/prebundler
+  # (forked from github.com/camertron/prebundler)
+    - name: Pre-cache dependencies
+      run: rvm ${{ env.RUBY_VERSION }} do prebundle install
+      env:
+        MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+        MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+    - name: Verify dependencies
+      run: rvm ${{ env.RUBY_VERSION }} do bundle check
+
+    - name: Set time zone to UTC properly
+      uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: UTC
+
+  # Build and push at once to allow "app" and "assets" to build as separate but
+  # dependently (quirk of using docker buildx, if not then you can omit --push)
+    - name: Run RSpec
+      run: rvm ${{ env.RUBY_VERSION }} do bundle exec rspec
+      env:
+        HARBOR_BOT_USER: ${{ secrets.HARBOR_BOT_USER }}
+        HARBOR_BOT_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
