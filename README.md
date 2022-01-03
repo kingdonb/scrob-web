@@ -84,7 +84,7 @@ adjacent to my staging cluster, `moo-cluster` in [bootstrap-repo][]
 
 Note this is not configured using Kubernetes, only the instructions from GitHub
 
-![msigaming3 the Self-Hosted Runner](/kingdonb/scrob-web/raw/main/assets/images/hosted-runner-msigaming3.png)
+![msigaming3 the Self-Hosted Runner](/assets/images/hosted-runner-msigaming3.png)
 
 * Deployment instructions
 
