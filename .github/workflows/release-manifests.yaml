@@ -27,6 +27,8 @@ jobs:
 
       - name: Prepare target branch
         run: rvm ${{ env.RUBY_VERSION }} do ./builder.sh
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
