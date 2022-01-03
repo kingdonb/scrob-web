@@ -5,12 +5,13 @@ on:
       - main
 
 jobs:
-  app:
+  builder:
     runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
 
+  # ran "docker buildx install" on our runner host so this step is not needed
    # - name: Set up Docker Buildx
    #   uses: docker/setup-buildx-action@v1
    #   with:
@@ -23,13 +24,15 @@ jobs:
         username: ${{ secrets.HARBOR_BOT_USER }}
         password: ${{ secrets.HARBOR_BOT_PASSWORD }}
 
-
+  # will manage RVM by hand, so no need to invoke setup-ruby
    # - uses: ruby/setup-ruby@v1
    #   with:
-   #     ruby-version: 2.7.5
+   #     ruby-version: 3.0.3
    #     bundler-cache: true
    #     cache-version: 1
 
+  # prebundler is: github.com/kingdonb/prebundler
+  # (forked from github.com/camertron/prebundler)
     - name: Pre-cache dependencies
       run: prebundle install
       env:
@@ -40,6 +43,7 @@ jobs:
     - name: Verify dependencies
       run: bundle check
 
+  # If ever using GitHub Actions runners again, use with cache-to=type=gha
    # - name: Expose GitHub Runtime
    #   uses: crazy-max/ghaction-github-runtime@v1
 
@@ -48,6 +52,8 @@ jobs:
       with:
         timezoneLinux: UTC
 
+  # Build and push at once to allow "app" and "assets" to build as separate but
+  # dependently (quirk of using docker buildx, if not then you can omit --push)
     - name: Kuby build/push app image
       run: bundle exec kuby -e production build --only app --
         --build-arg=MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}
@@ -59,49 +65,6 @@ jobs:
         HARBOR_BOT_USER: ${{ secrets.HARBOR_BOT_USER }}
         HARBOR_BOT_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-
-  assets:
-    runs-on: self-hosted
-    needs: app
-    steps:
-    - uses: actions/checkout@v2
-
-   # - name: Set up Docker Buildx
-   #   uses: docker/setup-buildx-action@v1
-   #   with:
-   #     install: true
-
-    - name: Login to Harbor (img.hephy.pro)
-      uses: docker/login-action@v1
-      with:
-        registry: img.hephy.pro
-        username: ${{ secrets.HARBOR_BOT_USER }}
-        password: ${{ secrets.HARBOR_BOT_PASSWORD }}
-
-
-   # - uses: ruby/setup-ruby@v1
-   #   with:
-   #     ruby-version: 2.7.5
-   #     bundler-cache: true
-   #     cache-version: 1
-
-    - name: Pre-cache dependencies
-      run: prebundle install
-      env:
-        MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
-        MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-
-    - name: Verify dependencies
-      run: bundle check
-
-   # - name: Expose GitHub Runtime
-   #   uses: crazy-max/ghaction-github-runtime@v1
-
-    - name: Set time zone to UTC properly
-      uses: szenius/set-timezone@v1.0
-      with:
-        timezoneLinux: UTC
 
     - name: Kuby build/push assets image
       run: bundle exec kuby -e production build --only assets --
