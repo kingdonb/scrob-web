@@ -1,0 +1,16 @@
+name: scrob
+selector:
+  app: scrob
+  role: web
+command: bash
+environment:
+- RAILS_ENV=development
+- BUNDLE_WITHOUT=''
+sync:
+- .:/usr/src/app
+forward:
+- 1234:1234
+- 8080:8080
+persistentVolume:
+  enabled: true
+  storageClass: local-path
