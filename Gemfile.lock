@@ -15,9 +15,9 @@ GIT
 
 GIT
   remote: https://github.com/kingdonb/kuby-core.git
-  revision: 416c62089928ebde1b0fa4d5000e95efcb6a5401
+  revision: 5948cd432deb2f3f77de6e3a48e100e9cbb53851
   specs:
-    kuby-core (0.16.0.pre.alpha12)
+    kuby-core (0.16.0.pre.alpha15)
       colorize (~> 0.8)
       docker-remote (~> 0.6)
       gli (~> 2.0)
@@ -27,6 +27,7 @@ GIT
       kubernetes-cli (~> 0.3)
       kuby-cert-manager (>= 0.3)
       kuby-kube-db (>= 0.6)
+      ptools (~> 1.4)
       railties (>= 5.1)
       rouge (~> 3.0)
       sorbet-runtime-stub (~> 0.2)
@@ -168,6 +169,7 @@ GEM
     helm-cli (0.3.0)
       helm-rb (~> 0.1)
     helm-rb (0.2.0-arm64-darwin)
+    helm-rb (0.2.0-x86_64-linux)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -208,6 +210,7 @@ GEM
       recursive-open-struct (~> 1.1, >= 1.1.1)
       rest-client (~> 2.0)
     kubectl-rb (0.2.1-arm64-darwin)
+    kubectl-rb (0.2.1-x86_64-linux)
     kubernetes-cli (0.3.2)
       kubectl-rb (~> 0.1)
     kuby-kube-db (0.7.1)
@@ -233,11 +236,14 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.12.5-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
+      racc (~> 1.4)
     ohey (1.0.0)
       wmi-lite (~> 1.0)
     oj (3.13.10)
     os (1.1.4)
     parallel (1.21.0)
+    ptools (1.4.2)
     public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
@@ -340,6 +346,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   debug

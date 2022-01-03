@@ -1,4 +1,4 @@
-name: Kuby build and push
+name: Kuby build and push manifests
 on:
   push:
     branches:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   builder:
+    name: Image Builder
     runs-on: self-hosted
     env:
       RUBY_VERSION: 3.0.3
@@ -58,3 +59,35 @@ jobs:
         HARBOR_BOT_USER: ${{ secrets.HARBOR_BOT_USER }}
         HARBOR_BOT_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+#jobs:
+  manifests:
+    name: Manifests Builder
+    runs-on: self-hosted
+    needs: builder
+    env:
+      RUBY_VERSION: 3.0.3
+
+    steps:
+      - name: Prepare
+        id: prep
+        run: |
+          VERSION=${GITHUB_SHA::8}
+          echo ::set-output name=BUILD_DATE::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo ::set-output name=VERSION::${VERSION}
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run manifest builder
+        run: rvm ${{ env.RUBY_VERSION }} do ./builder.sh
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: 'manifests'
+          branch: main
+          message: "[ci skip] run kuby resources (builder.sh)"
+          signoff: true
