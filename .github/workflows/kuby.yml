@@ -24,7 +24,7 @@ jobs:
   # prebundler is: github.com/kingdonb/prebundler
   # (forked from github.com/camertron/prebundler)
     - name: Pre-cache dependencies
-      run: prebundle install
+      run: rvm 3.0.3 do prebundle install
       env:
         MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
         MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
