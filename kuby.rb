@@ -33,6 +33,12 @@ Kuby.define('Scrob') do
 
         manage_database false
         ingress_class 'public'
+
+        env do
+          data do
+            add 'RAILS_LOG_TO_STDOUT', 'yes'
+          end
+        end
       end
     end
   end
