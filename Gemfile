@@ -7,6 +7,8 @@ gem 'kuby-core',          '~> 0.16.0.a',  github: 'kingdonb/kuby-core'
 gem 'kube-dsl',           '~> 0.7.0',     github: 'kingdonb/kube-dsl'
 gem 'kuby-cert-manager',  '~> 0.4.0',     github: 'kingdonb/kuby-cert-manager'
 
+gem 'rails_stdout_logging'
+
 gem 'prebundler',         '~> 0.13.0.a',  github: 'kingdonb/prebundler'
 #gem 'webrick'
 
