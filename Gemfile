@@ -31,6 +31,9 @@ gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
+# Makes log output more sensible
+gem 'lograge'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
