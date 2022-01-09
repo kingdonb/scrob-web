@@ -21,6 +21,16 @@ module Ecoli
       self[:ws_title]
     end
 
+    def magic
+      @magic ||=
+        "Ecoli::Magic#{ws_title}".classify.constantize
+        .new(worksheet: self)
+    end
+
+    def records
+      magic.records
+    end
+
     def worksheet
       self[:worksheet] ||
         self[:worksheet] =
@@ -28,7 +38,9 @@ module Ecoli
     end
 
     def ok?
-      true
+      magic&.ok?
+    rescue StandardError => e
+      false
     end
   end
 end
