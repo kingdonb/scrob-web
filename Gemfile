@@ -10,6 +10,8 @@ gem 'kuby-cert-manager',  '~> 0.4.0',     github: 'kingdonb/kuby-cert-manager'
 gem 'prebundler',         '~> 0.13.0.a',  github: 'kingdonb/prebundler'
 #gem 'webrick'
 
+gem "awesome_print", require: "ap"
+
 gem "google_drive"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
