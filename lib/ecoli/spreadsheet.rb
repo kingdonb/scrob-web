@@ -18,15 +18,29 @@ module Ecoli
       }
 
       @properties[:ws] =
-        session.spreadsheet_by_key(spreadsheet_id) #.worksheet_by_title("Raw data")
-    end
-
-    def pry
-      binding.pry
+        session.spreadsheet_by_key(spreadsheet_id)
     end
 
     def spreadsheet_id
       @spreadsheet_id
+    end
+
+    def worksheets
+      self[:ws].worksheets
+    end
+
+    def worksheet_by_title(title)
+      self[:ws].worksheet_by_title(title)
+    end
+
+    def worksheets_titles
+      worksheets.map(&:title)
+    end
+
+    def all_worksheets
+      worksheets_titles.map do |title|
+        Worksheet.new(spreadsheet: self, ws_title: title)
+      end
     end
   end
 end
