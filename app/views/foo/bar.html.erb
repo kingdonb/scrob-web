@@ -1,12 +1,14 @@
-<h1>Worksheets</h1>
-<ul>
-<%- @w.each do |worksheet| %>
-  <li><span><%= worksheet.ws_title %></span>:
+<h1>Each Worksheet</h1>
+<h2><%= @title %></h2>
+<h3>Ok?: <%= @ok %>
+<pre><%= @records %></pre>
+
+<%- @w.each do |worksheet| %><p>
+  <span><%= worksheet.ws_title %></span>:
   <span><%- if worksheet.ok? -%>
     ✅
     <%- else -%>
     🧨
   <%- end -%>
-  </span></li>
+  </span></p>
 <% end -%>
-</ul>
