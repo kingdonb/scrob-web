@@ -1,4 +1,4 @@
-name: Kuby build and push manifests
+name: RSpec for Ruby Version
 on:
   push:
     branches:
