@@ -35,7 +35,10 @@ if 0 == @last_exit_status && @stderr == ""
   secrets, manifests = array.partition { |x| x["kind"] == "Secret" }
 
   cluster_issuers, manifests =
-    manifests.partition { |x| x["kind"] == "ClusterIssuer" }
+    manifests.partition do |x|
+      x["kind"] == "ClusterIssuer" ||
+        x["kind"] == "Namespace"
+    end
 
   # Discard the cluster issuer since we will be operating as a tenant
   cluster_issuers = ''
