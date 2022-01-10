@@ -1,2 +1,14 @@
-<h1>bar</h1>
-<p>Find me in the <strong>Foo</strong> <tt>bar.html.erb</tt></p>
+<h1>Each Worksheet</h1>
+<h2><%= @title %></h2>
+<h3>Ok?: <%= @ok %>
+<pre><%= @records %></pre>
+
+<%- @w.each do |worksheet| %><p>
+  <span><%= worksheet.ws_title %></span>:
+  <span><%- if worksheet.ok? -%>
+    ✅
+    <%- else -%>
+    🧨
+  <%- end -%>
+  </span></p>
+<% end -%>
