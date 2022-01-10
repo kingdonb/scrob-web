@@ -44,6 +44,7 @@ module Ecoli
     end
 
     def ok_worksheets
+      @ok_worksheets ||=
       all_worksheets.map do |worksheet|
         if worksheet.ok?
           worksheet
@@ -51,6 +52,24 @@ module Ecoli
           nil
         end
       end.compact
+    end
+
+    def to_csv
+      o = ok_worksheets
+      r = ok_worksheets.map(&:records)
+      f = r.flatten.map{|s| Record.new(s)}
+      csv_string = CSV.generate do |csv|
+        csv << f.first.known_keys # header row
+        rows = f.each do |record|
+          csv << record.to_csv
+        end
+      end
+
+      filename = "/tmp/written-#{Time.now.strftime('%s')}.csv"
+      File.open(filename, 'w') { |file| file.write(csv_string) }
+
+      @message = "Wrote to '#{filename}' without errors"
+      csv_string
     end
   end
 end
