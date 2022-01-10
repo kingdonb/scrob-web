@@ -6,8 +6,9 @@ class FooController < ApplicationController
     @s = Ecoli::Spreadsheet.new(google_sheet_id: '1vAoOl4xCSPJcIK95FYdZ9C9Q-zxBn-1mLCyEhnVOaBU')
     @w = @s.all_worksheets
 
-    @records = @w[2].records.ai(html: true)
-    @title = @w[2].ws_title
-    @ok = @w[2].ok?
+    n = 20
+    @records  = @w[n].records.ai(html: true)
+    @title    = @w[n].ws_title
+    @ok       = @w[n].ok?
   end
 end

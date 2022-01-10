@@ -60,7 +60,7 @@ module Ecoli
           do: row[3],
           tss: row[4],
           temp_c: row[5],
-          rain: row[21]
+          weather: row[21]
         }
       end
     end
@@ -75,7 +75,7 @@ module Ecoli
           do: row[8],
           tss: row[9],
           temp_c: row[10],
-          rain: row[21]
+          weather: row[21]
         }
       end
     end
@@ -90,7 +90,7 @@ module Ecoli
           do: row[13],
           tss: row[14],
           temp_c: row[15],
-          rain: row[21]
+          weather: row[21]
         }
       end
     end
@@ -105,7 +105,7 @@ module Ecoli
           outfall_do: row[18],
           tss: row[19],
           temp_c: row[20],
-          rain: row[21]
+          weather: row[21]
         }
       end
     end
