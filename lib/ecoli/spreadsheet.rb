@@ -42,5 +42,15 @@ module Ecoli
         Worksheet.new(spreadsheet: self, ws_title: title)
       end
     end
+
+    def ok_worksheets
+      all_worksheets.map do |worksheet|
+        if worksheet.ok?
+          worksheet
+        else
+          nil
+        end
+      end.compact
+    end
   end
 end

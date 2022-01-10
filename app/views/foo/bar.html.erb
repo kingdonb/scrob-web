@@ -1,14 +1,17 @@
-<h1>Each Worksheet</h1>
-<h2><%= @title %></h2>
-<h3>Ok?: <%= @ok %>
-<pre><%= @records %></pre>
+<h1>OK Worksheets</h1>
+<p>Number: <%= @n_ok %></p>
+<p>Names: <%= @ok_worksheets %></p>
 
-<%- @w.each do |worksheet| %><p>
-  <span><%= worksheet.ws_title %></span>:
-  <span><%- if worksheet.ok? -%>
-    ✅
-    <%- else -%>
-    🧨
+<h1>Each Worksheet:</h1>
+
+<%- @w.each do |worksheet|
+  ok = worksheet.ok?
+  %>
+  <%- if ok -%>
+    <%= worksheet.ws_title %>:
+      ✅
+  <%- else -%>
+    <p><%= worksheet.ws_title %>:
+    🧨</p>
   <%- end -%>
-  </span></p>
 <% end -%>
