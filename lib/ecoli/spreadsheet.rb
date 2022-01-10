@@ -64,6 +64,12 @@ module Ecoli
           csv << record.to_csv
         end
       end
+
+      filename = "/tmp/written-#{Time.now.strftime('%s')}.csv"
+      File.open(filename, 'w') { |file| file.write(csv_string) }
+
+      @message = "Wrote to '#{filename}' without errors"
+      csv_string
     end
   end
 end
