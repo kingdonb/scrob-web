@@ -1,7 +1,6 @@
 # typed: strict
 require 'forwardable'
-
-# require 'pry'
+require 'fileutils'
 
 module Splat
   module_function
