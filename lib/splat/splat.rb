@@ -51,7 +51,8 @@ module Splat
 
       arr.each do |o|
         object_name = o.dig("metadata", "name")
-        target_file = File.join(path, "#{object_name}.yaml")
+        object_kind = o.dig("kind").downcase
+        target_file = File.join(path, "#{object_name}-#{object_kind}.yaml")
         write_to_file(target_file: target_file, object: o)
       end
     end
