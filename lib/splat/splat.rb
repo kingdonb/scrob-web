@@ -22,7 +22,30 @@ module Splat
     mkdirp(path); path
   end
 
+  def abort_if_missing_kind(object)
+    o = object.dig("kind")
+    if o.nil? || (o&.length == 0)
+      raise StandardError,
+        "Kubernetes YAML resources cannot be missing apiVersion or kind"
+    end
+  end
+
+  def abort_if_missing_name(object)
+    o = object.dig("metadata","name")
+    if o.nil? || (o&.length == 0)
+      raise StandardError,
+        "Kubernetes YAML resources cannot be missing metadata.name"
+    end
+  end
+
   def write_namespaces_into_folder(namespaces_arr:, target_dir:)
+    # validate first
+    namespaces_arr.values.flatten.map{|o|
+      abort_if_missing_kind(o)
+      abort_if_missing_name(o)
+    }
+
+    # write everything out into folders
     namespaces_arr.each do |namespace, arr|
       path = safe_path_ref(target_dir:target_dir, namespace:namespace)
 
