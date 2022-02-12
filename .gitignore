@@ -38,3 +38,5 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /manifests/secret.yaml
+/manifests/k8s/**/*.yaml
+/secrets/**/*.yaml
