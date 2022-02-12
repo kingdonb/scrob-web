@@ -39,7 +39,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    getkuby.io/dockerfile-checksum: f748ad69577ee4115a44c12955e0e8d99fcff1974d864cc8896f7747200fae65
+    getkuby.io/dockerfile-checksum: f536b78cb94cb32091e117f9e2c785826e1e931ef7b86807a9a3f11f3c10c142
   labels:
     app: scrob
     role: web
