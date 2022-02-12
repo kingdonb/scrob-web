@@ -45,12 +45,12 @@ if 0 == @last_exit_status && @stderr == ""
   cluster_issuers = ''
 
   # Write the secret files out
-  write_namespaces_into_folder(target_dir: './secrets',
-    namespaces_arr: sort_into_namespaces(secrets))
+  Splat.write_namespaces_into_folder(target_dir: './secrets',
+    namespaces_arr: Splat.sort_into_namespaces(secrets))
 
   # Write the manifest files out
-  write_namespaces_into_folder(target_dir: './manifests/k8s',
-    namespaces_arr: sort_into_namespaces(manifests))
+  Splat.write_namespaces_into_folder(target_dir: './manifests/k8s',
+    namespaces_arr: Splat.sort_into_namespaces(manifests))
 else
   puts @stderr
   Kernel.exit(@last_exit_status)
