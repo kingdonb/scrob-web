@@ -3,8 +3,6 @@ require './lib/splat/splat'
 #   target_dir: './secrets',
 #   namespaces_arr: Splat.sort_into_namespaces(secrets))
 
-require 'pry'
-
 RSpec.describe Splat do
   describe '#sort_into_namespaces' do
     it 'groups by namespace' do
@@ -27,6 +25,7 @@ RSpec.describe Splat do
          "bar"=>[{"metadata"=>{"namespace"=>"bar", "name"=>"foo"}}]}
       }
       it 'works' do
+        allow(Splat).to receive(:mkdirp)
         expect(Splat).to receive(:write_to_file).with(
           :object=>{"metadata"=>{"name"=>"foo", "namespace"=>"foo"}},
           :target_file=>"test-tmp-dir/foo/foo.yaml"
@@ -42,17 +41,18 @@ RSpec.describe Splat do
     end
     context 'unnamespaced content' do
       let(:t) {
-        {nil=>[{"metadata"=>{"name"=>"foo"}}],
-         nil=>[{"metadata"=>{"name"=>"foo"}}]}
+        {nil=>[{"metadata"=>{"name"=>"foo"}},
+               {"metadata"=>{"name"=>"bar"}}]}
       }
       it 'works' do
+        allow(Splat).to receive(:mkdirp)
         expect(Splat).to receive(:write_to_file).with(
           :object=>{"metadata"=>{"name"=>"foo"}},
           :target_file=>"test-tmp-dir/foo.yaml"
         ).ordered
         expect(Splat).to receive(:write_to_file).with(
-          :object=>{"metadata"=>{"name"=>"foo"}},
-          :target_file=>"test-tmp-dir/foo.yaml"
+          :object=>{"metadata"=>{"name"=>"bar"}},
+          :target_file=>"test-tmp-dir/bar.yaml"
         ).ordered
 
         r = Splat.write_namespaces_into_folder(

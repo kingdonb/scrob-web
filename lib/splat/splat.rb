@@ -9,10 +9,23 @@ module Splat
     arr.group_by {|o| o.dig("metadata", "namespace")}
   end
 
+  def mkdirp(p)
+    FileUtils.mkdir_p(p)
+  end
+
+  def safe_path_ref(target_dir:, namespace:)
+    path = if namespace.nil?
+             target_dir
+           else
+             File.join(target_dir,namespace)
+           end
+    mkdirp(path); path
+  end
+
   def write_namespaces_into_folder(namespaces_arr:, target_dir:)
     namespaces_arr.each do |namespace, arr|
-      path = File.join(target_dir,namespace)
-      FileUtils.mkdir_p path
+      path = safe_path_ref(target_dir:target_dir, namespace:namespace)
+
       arr.each do |o|
         object_name = o.dig("metadata", "name")
         target_file = File.join(path, "#{object_name}.yaml")
