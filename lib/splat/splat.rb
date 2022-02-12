@@ -1,6 +1,7 @@
 # typed: strict
 require 'forwardable'
 require 'fileutils'
+require 'yaml'
 
 module Splat
   module_function
@@ -15,9 +16,13 @@ module Splat
       arr.each do |o|
         object_name = o.dig("metadata", "name")
         target_file = File.join(path, "#{object_name}.yaml")
-        File.open(target_file, 'w') { |file| file.write(o.to_yaml) }
+        write_to_file(target_file: target_file, object: o)
       end
     end
+  end
+
+  def write_to_file(target_file:, object:)
+    File.open(target_file, 'w') { |file| file.write(object.to_yaml) }
   end
 end
 
