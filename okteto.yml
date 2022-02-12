@@ -14,3 +14,6 @@ forward:
 persistentVolume:
   enabled: true
   storageClass: local-path
+metadata:
+  annotations:
+    kustomize.toolkit.fluxcd.io/reconcile: disabled
