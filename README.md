@@ -61,6 +61,13 @@ Set these to your container image bot credential and update `image_url` so it re
 end
 ```
 
+The above instructions may not completely cover actions runners. I'm using a runner with a local `rvm` for the latest version of Ruby at any given time, and these commands were also needed to prepare it as of the last Ruby upgrade:
+
+```
+gem install specific_install
+gem specific_install https://github.com/kingdonb/prebundler
+```
+
 * Configuration
 
 * Database creation
