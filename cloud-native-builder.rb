@@ -4,7 +4,7 @@ APP_ENV=development
 APP_NAME=scrob-web
 APP_PORT=9292
 APP_PACKER=pack
-BUILDPACK=https://cnb-shim.herokuapp.com/v1/heroku/ruby
+BUILDPACK=https://cnb-shim.herokuapp.com/v1/yebyen/og-pack-multi
 BUILDER=heroku/buildpacks:20
 
 echo "To build the app:"
