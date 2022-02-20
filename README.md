@@ -5,6 +5,8 @@ application up and running.
 
 NOTE: Things have changed since the doc below was written, see the Buildpacks PR
 
+NOTE ALSO: The approach to caching that we tried in there, did not work...
+
 Things you may want to cover:
 
 * Ruby version
