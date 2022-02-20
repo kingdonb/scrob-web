@@ -3,6 +3,8 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
+NOTE: Things have changed since the doc below was written, see the Buildpacks PR
+
 Things you may want to cover:
 
 * Ruby version
