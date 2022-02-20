@@ -1,7 +1,11 @@
 require "active_support/core_ext/integer/time"
+require "securerandom"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  # Suggested here: https://github.com/paketo-buildpacks/rails-assets/issues/144#issuecomment-975613426
+  config.secret_key_base = ENV['SECRET_KEY_BASE'] || SecureRandom.hex(64)
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -62,7 +66,7 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "scrob_web_production"
 
-  config.action_mailer.perform_caching = false
+  # config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -89,8 +93,8 @@ Rails.application.configure do
   end
 
   # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
+  # config.active_record.dump_schema_after_migration = false
 
   # Do not warn about sqlite in production
-  config.active_record.sqlite3_production_warning = false
+  # config.active_record.sqlite3_production_warning = false
 end

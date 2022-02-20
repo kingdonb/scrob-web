@@ -4,6 +4,12 @@ require 'fileutils'
 require 'yaml'
 
 module Splat
+  class Splat
+    # we need to define Splat.Splat if we want to live here according to zeitwerk
+    # /Users/kingdonb/.rvm/gems/ruby-3.1.0/gems/zeitwerk-2.5.4/lib/zeitwerk/loader/callbacks.rb:25:in `on_file_autoloaded': expected file
+    # /Users/kingdonb/projects/fluxcd/scrob-web/lib/splat/splat.rb to define constant Splat::Splat, but didn't (Zeitwerk::NameError)
+  end
+
   # module_function -- ackshually https://stackoverflow.com/a/35012552/661659
   class << self
     def sort_into_namespaces(arr)

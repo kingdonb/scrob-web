@@ -100,6 +100,8 @@ GEM
     activerecord (7.0.2.2)
       activemodel (= 7.0.2.2)
       activesupport (= 7.0.2.2)
+    activerecord-nulldb-adapter (0.8.0)
+      activerecord (>= 5.2.0, < 7.1)
     activestorage (7.0.2.2)
       actionpack (= 7.0.2.2)
       activejob (= 7.0.2.2)
@@ -297,6 +299,7 @@ GEM
     oj (3.13.11)
     os (1.1.4)
     parallel (1.21.0)
+    pg (1.3.2)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -385,7 +388,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     statsd-instrument (3.0.2)
     stimulus-rails (1.0.2)
       railties (>= 6.0.0)
@@ -420,6 +422,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-nulldb-adapter
   awesome_print
   debug
   google_drive
@@ -428,13 +431,13 @@ DEPENDENCIES
   kuby-cert-manager (~> 0.4.0)!
   kuby-core (~> 0.16.0.a)!
   lograge
+  pg (~> 1.3)
   prebundler (~> 0.13.0.a)!
   pry-rails
   puma (~> 5.0)
   rails (~> 7.0.0)
   rspec-rails (~> 5.0.0)
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
   tzinfo-data
