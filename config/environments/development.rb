@@ -7,6 +7,13 @@ Rails.application.configure do
   # Suggested here: https://github.com/paketo-buildpacks/rails-assets/issues/144#issuecomment-975613426
   config.secret_key_base = ENV['SECRET_KEY_BASE'] || SecureRandom.hex(64)
 
+  # Like in production
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
