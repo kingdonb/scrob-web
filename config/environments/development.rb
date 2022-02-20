@@ -1,7 +1,11 @@
 require "active_support/core_ext/integer/time"
+require "securerandom"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  # Suggested here: https://github.com/paketo-buildpacks/rails-assets/issues/144#issuecomment-975613426
+  config.secret_key_base = ENV['SECRET_KEY_BASE'] || SecureRandom.hex(64)
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
