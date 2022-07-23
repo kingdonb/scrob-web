@@ -357,6 +357,10 @@ GEM
     retriable (3.1.2)
     rexml (3.2.5)
     rouge (3.28.0)
+    rspec (3.11.0)
+      rspec-core (~> 3.11.0)
+      rspec-expectations (~> 3.11.0)
+      rspec-mocks (~> 3.11.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
     rspec-expectations (3.11.0)
@@ -436,6 +440,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 5.0)
   rails (~> 7.0.0)
+  rspec (~> 3.5)
   rspec-rails (~> 5.0.0)
   sprockets-rails
   stimulus-rails
