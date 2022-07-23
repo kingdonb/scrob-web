@@ -46,6 +46,8 @@ jobs:
         --build-arg=MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}
         && rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e production push
       env:
+        DOCKER_USERNAME: ${{ secrets.HARBOR_BOT_USER }}
+        DOCKER_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
         HARBOR_BOT_USER: ${{ secrets.HARBOR_BOT_USER }}
         HARBOR_BOT_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
