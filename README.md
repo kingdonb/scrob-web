@@ -11,7 +11,7 @@ Things you may want to cover:
 
 * Ruby version
 
-3.1.2 - seems to be working
+3.1.2 - seems to be working...
 
 To work with GitHub Actions as I have it configured, you should set up a
 [self-hosted runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
