@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/kingdonb/docker-remote.git
+  revision: 2632fbcf547ca27be40205cad1e75cb3e0d52c02
+  branch: request-pull-scope
+  specs:
+    docker-remote (0.8.0)
+
+GIT
   remote: https://github.com/kingdonb/kube-dsl.git
   revision: af0858b41e6ec553f61cbe46f1023d5d978f747f
   branch: old-master
@@ -140,7 +147,6 @@ GEM
     declarative (0.0.20)
     diff-lcs (1.5.0)
     digest (3.1.0)
-    docker-remote (0.7.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dry-inflector (0.3.0)
@@ -430,6 +436,7 @@ DEPENDENCIES
   activerecord-nulldb-adapter
   awesome_print
   debug
+  docker-remote!
   google_drive
   importmap-rails
   kube-dsl (~> 0.7.0)!

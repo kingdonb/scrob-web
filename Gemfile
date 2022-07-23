@@ -6,6 +6,7 @@ ruby "3.1.2"
 gem 'kuby-core',          '~> 0.16.0.a',  github: 'kingdonb/kuby-core'
 gem 'kube-dsl',           '~> 0.7.0',     github: 'kingdonb/kube-dsl', branch: 'old-master'
 gem 'kuby-cert-manager',  '~> 0.4.0',     github: 'kingdonb/kuby-cert-manager'
+gem 'docker-remote', github: 'kingdonb/docker-remote', branch: 'request-pull-scope'
 
 gem 'prebundler',         '~> 0.13.0.a',  github: 'kingdonb/prebundler'
 #gem 'webrick'
