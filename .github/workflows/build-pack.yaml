@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup pack CLI
-        uses: buildpacks/github-actions/setup-pack@v4.5.1
+        uses: buildpacks/github-actions/setup-pack@v4.8.0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
