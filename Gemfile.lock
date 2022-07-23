@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/kingdonb/kube-dsl.git
   revision: af0858b41e6ec553f61cbe46f1023d5d978f747f
+  branch: old-master
   specs:
     kube-dsl (0.7.0)
       dry-inflector (~> 0.2)
