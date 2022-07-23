@@ -11,8 +11,7 @@ Things you may want to cover:
 
 * Ruby version
 
-3.0.3 - at press time, the latest Rails version 7 was not ready to run on Ruby
-3.1.0 yet, so I used the next to latest version instead, which is 3.0.3 today.
+3.1.2 - seems to be working
 
 To work with GitHub Actions as I have it configured, you should set up a
 [self-hosted runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
