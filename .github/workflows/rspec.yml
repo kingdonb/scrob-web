@@ -41,7 +41,7 @@ jobs:
   # Build and push at once to allow "app" and "assets" to build as separate but
   # dependently (quirk of using docker buildx, if not then you can omit --push)
     - name: Run RSpec
-      run: rvm ${{ env.RUBY_VERSION }} do bundle exec rspec
+      run: rvm ${{ env.RUBY_VERSION }} do bundle exec ./bin/rspec
       env:
         HARBOR_BOT_USER: ${{ secrets.HARBOR_BOT_USER }}
         HARBOR_BOT_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
