@@ -68,7 +68,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220723224803
+        image: img.hephy.pro/scrob/web:20220723225021
         imagePullPolicy: IfNotPresent
         name: scrob-web
         ports:
@@ -98,7 +98,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220723224803
+        image: img.hephy.pro/scrob/web:20220723225021
         name: scrob-create-db
       - command:
         - bundle
@@ -110,7 +110,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220723224803
+        image: img.hephy.pro/scrob/web:20220723225021
         name: scrob-migrate-db
       restartPolicy: Always
       serviceAccountName: scrob-sa
@@ -254,7 +254,7 @@ spec:
         role: assets
     spec:
       containers:
-      - image: img.hephy.pro/scrob/web:20220723224803-assets
+      - image: img.hephy.pro/scrob/web:20220723225021-assets
         imagePullPolicy: IfNotPresent
         name: scrob-assets
         ports:
