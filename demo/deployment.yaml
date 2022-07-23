@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrob
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: scrob
+  template:
+    metadata:
+      labels:
+        app: scrob
+    spec:
+      containers:
+        - name: scrob
+          image: ghcr.io/kingdonb/scrob-web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9898
+              protocol: TCP

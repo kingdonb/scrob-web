@@ -1,10 +1,10 @@
-FROM img.hephy.pro/scrob/web:20220110135520 AS scrob-20220110135520
+FROM img.hephy.pro/scrob/web:20220723190401 AS scrob-20220723190401
 ARG RAILS_MASTER_KEY
 RUN mkdir -p /usr/share/assets
 RUN env RAILS_MASTER_KEY=$RAILS_MASTER_KEY bundle exec rake kuby:rails_app:assets:copy
-FROM img.hephy.pro/scrob/web:20220110141508 AS scrob-20220110141508
+FROM img.hephy.pro/scrob/web:20220723190733 AS scrob-20220723190733
 ARG RAILS_MASTER_KEY
-COPY --from=scrob-20220110135520 /usr/share/assets /usr/share/assets
+COPY --from=scrob-20220723190401 /usr/share/assets /usr/share/assets
 RUN env RAILS_MASTER_KEY=$RAILS_MASTER_KEY bundle exec rake kuby:rails_app:assets:copy
 FROM nginx:1.9-alpine
-COPY --from=scrob-20220110141508 /usr/share/assets /usr/share/nginx/assets
+COPY --from=scrob-20220723190733 /usr/share/assets /usr/share/nginx/assets

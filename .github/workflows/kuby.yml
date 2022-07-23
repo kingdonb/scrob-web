@@ -9,7 +9,7 @@ jobs:
     name: Image Builder
     runs-on: self-hosted
     env:
-      RUBY_VERSION: 3.1.0
+      RUBY_VERSION: 3.1.2
 
     steps:
     - uses: actions/checkout@v2
@@ -45,7 +45,10 @@ jobs:
         --build-arg=MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}
         --build-arg=MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}
         --push
+        # && rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e production push
       env:
+        # DOCKER_USERNAME: ${{ secrets.HARBOR_BOT_USER }}
+        # DOCKER_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
         HARBOR_BOT_USER: ${{ secrets.HARBOR_BOT_USER }}
         HARBOR_BOT_PASSWORD: ${{ secrets.HARBOR_BOT_PASSWORD }}
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
@@ -66,7 +69,7 @@ jobs:
     runs-on: self-hosted
     needs: builder
     env:
-      RUBY_VERSION: 3.1.0
+      RUBY_VERSION: 3.1.2
 
     steps:
       - name: Prepare

@@ -1,11 +1,12 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.0"
+ruby "3.1.2"
 
 gem 'kuby-core',          '~> 0.16.0.a',  github: 'kingdonb/kuby-core'
-gem 'kube-dsl',           '~> 0.7.0',     github: 'kingdonb/kube-dsl'
+gem 'kube-dsl',           '~> 0.7.0',     github: 'kingdonb/kube-dsl', branch: 'old-master'
 gem 'kuby-cert-manager',  '~> 0.4.0',     github: 'kingdonb/kuby-cert-manager'
+gem 'docker-remote', github: 'kingdonb/docker-remote', branch: 'request-pull-scope'
 
 gem 'prebundler',         '~> 0.13.0.a',  github: 'kingdonb/prebundler'
 #gem 'webrick'
@@ -63,6 +64,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'rspec', '~> 3.5'
 end
 
 group :development do
