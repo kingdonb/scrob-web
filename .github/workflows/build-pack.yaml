@@ -38,10 +38,9 @@ jobs:
       - name: Build
         id: build
         run: |
-          pack build scrob-web \
+          pack build ghcr.io/kingdonb/scrob-web:${GITHUB_SHA::7} \
             --buildpack https://cnb-shim.herokuapp.com/v1/heroku/ruby \
             --builder heroku/buildpacks:20 \
-            --tag ghcr.io/kingdonb/scrob-web:${GITHUB_SHA::7} \
             --cache-image ghcr.io/kingdonb/scrob-web:buildcache \
             --publish
 
