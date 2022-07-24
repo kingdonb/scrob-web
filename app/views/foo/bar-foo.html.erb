@@ -1,0 +1,24 @@
+<h2>Bar? "<%= @f %>"</h2>
+<h1>Our Worksheets</h1>
+<p>Number: <%= @n_ok %></p>
+<p>Names: <%= @ok_worksheets %></p>
+
+<h1>Each Worksheet:</h1>
+
+<%- @w.each do |worksheet|
+  ok = worksheet.ok?
+  %>
+  <%- if ok -%>
+    <%= worksheet.ws_title %>:
+      ✅
+  <%- else -%>
+    <p><%= worksheet.ws_title %>:
+    🧨</p>
+  <%- end -%>
+<% end -%>
+
+<h1>Message from CSV Writer:</h1>
+<p><%= @message %></p>
+
+<h1>CSV Output:</h1>
+<pre><%= @csv %></pre>
