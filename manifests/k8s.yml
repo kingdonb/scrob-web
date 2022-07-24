@@ -124,7 +124,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: scrob.hephy.pro
+  - host: scrob-dev.hephy.pro
     http:
       paths:
       - backend:
@@ -134,7 +134,7 @@ spec:
               number: 8080
         path: "/"
         pathType: Prefix
-  - host: scrob.hephy.pro
+  - host: scrob-dev.hephy.pro
     http:
       paths:
       - backend:
@@ -153,7 +153,7 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - scrob.hephy.pro
+    - scrob-dev.hephy.pro
     secretName: scrob-tls
 ---
 apiVersion: v1
