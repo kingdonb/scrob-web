@@ -5,7 +5,7 @@ class FooController < ApplicationController
   def bar
     @f = "Foo Bar"
 
-    @s = Steuben::Spreadsheet.new(google_sheet_id: '1v9Y3rWYXvtpNiEOZLmNmRjTv3YPEkbXC')
+    @s = Steuben::Spreadsheet.new(google_sheet_id: '1Mtd3oiR8dI0Df5tSwdwOISFbpGo4ATnW-zQISb_mye8')
     @w = @s.all_worksheets
 
     @n_ok = @s.ok_worksheets.count
