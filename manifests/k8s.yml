@@ -30,7 +30,7 @@ metadata:
 apiVersion: v1
 data:
   RAILS_LOG_TO_STDOUT: 'yes'
-  DATABASE_URL: 'nulldb://nohost'
+  DATABASE_URL: nulldb://nohost
 kind: ConfigMap
 metadata:
   name: scrob-config
@@ -69,7 +69,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220723225021
+        image: img.hephy.pro/scrob/web:20220724115016
         imagePullPolicy: IfNotPresent
         name: scrob-web
         ports:
@@ -99,7 +99,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220723225021
+        image: img.hephy.pro/scrob/web:20220724115016
         name: scrob-create-db
       - command:
         - bundle
@@ -111,7 +111,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220723225021
+        image: img.hephy.pro/scrob/web:20220724115016
         name: scrob-migrate-db
       restartPolicy: Always
       serviceAccountName: scrob-sa
@@ -255,7 +255,7 @@ spec:
         role: assets
     spec:
       containers:
-      - image: img.hephy.pro/scrob/web:20220723225021-assets
+      - image: img.hephy.pro/scrob/web:20220724115016-assets
         imagePullPolicy: IfNotPresent
         name: scrob-assets
         ports:
