@@ -3,7 +3,7 @@
 
 require 'yaml'
 
-command = 'bundle exec kuby -e production resources'
+command = 'bundle exec kuby -e development resources'
 
 # from: https://coderedirect.com/questions/353836/fork-child-process-with-timeout-and-capture-output
 array = []
