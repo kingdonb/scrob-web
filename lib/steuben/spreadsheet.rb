@@ -58,6 +58,8 @@ module Steuben
       o = ok_worksheets
       r = ok_worksheets.map(&:records)
       f = r.flatten.map{|s| Record.new(s)}
+      raise StandardError, "there were no OK spreadsheets" if f.count == 0
+
       csv_string = CSV.generate do |csv|
         csv << f.first.known_keys # header row
         rows = f.each do |record|
