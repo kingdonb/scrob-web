@@ -29,7 +29,7 @@ Kuby.define('Scrob') do
 
       # Add a plugin that facilitates deploying a Rails app.
       add_plugin :rails_app do
-        hostname 'scrob.hephy.pro'
+        hostname 'scrob-dev.hephy.pro'
 
         manage_database false
         ingress_class 'public'
