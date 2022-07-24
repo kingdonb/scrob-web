@@ -42,7 +42,7 @@ jobs:
   # Build and push at once to allow "app" and "assets" to build as separate but
   # dependently (quirk of using docker buildx, if not then you can omit --push)
     - name: Kuby build/push app image
-      run: rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e production build --only app --
+      run: rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e development build --only app --
         --build-arg=MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}
         --build-arg=MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}
         --push
@@ -55,7 +55,7 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
     - name: Kuby build/push assets image
-      run: rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e production build --only assets --
+      run: rvm ${{ env.RUBY_VERSION }} do bundle exec kuby -e development build --only assets --
         --build-arg=MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}
         --build-arg=MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}
         --push
