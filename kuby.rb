@@ -38,6 +38,7 @@ Kuby.define('Scrob') do
           data do
             add 'RAILS_LOG_TO_STDOUT', 'yes'
             add 'DATABASE_URL', 'nulldb://nohost'
+            add 'RAILS_ENV', 'development'
           end
         end
       end
