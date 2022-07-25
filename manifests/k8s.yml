@@ -6,7 +6,7 @@ metadata:
     app: scrob
     role: web
   name: scrob-svc
-  namespace: scrob-production
+  namespace: scrob-development
 spec:
   ports:
   - name: http
@@ -25,7 +25,7 @@ metadata:
     app: scrob
     role: web
   name: scrob-sa
-  namespace: scrob-production
+  namespace: scrob-development
 ---
 apiVersion: v1
 data:
@@ -34,18 +34,18 @@ data:
 kind: ConfigMap
 metadata:
   name: scrob-config
-  namespace: scrob-production
+  namespace: scrob-development
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    getkuby.io/dockerfile-checksum: 527ee0fe4dd047afc07738c03838c4fafbe4a4c2a012f9a30813d2a218953db3
+    getkuby.io/dockerfile-checksum: 3f1eafc84a67e53cc545863cf4be59cc4107fa60242b552a4f6368e249bcfa97
   labels:
     app: scrob
     role: web
   name: scrob-web
-  namespace: scrob-production
+  namespace: scrob-development
 spec:
   replicas: 1
   selector:
@@ -69,7 +69,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220724115016
+        image: img.hephy.pro/scrob/web:20220724215619
         imagePullPolicy: IfNotPresent
         name: scrob-web
         ports:
@@ -99,7 +99,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220724115016
+        image: img.hephy.pro/scrob/web:20220724215619
         name: scrob-create-db
       - command:
         - bundle
@@ -111,7 +111,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220724115016
+        image: img.hephy.pro/scrob/web:20220724215619
         name: scrob-migrate-db
       restartPolicy: Always
       serviceAccountName: scrob-sa
@@ -119,14 +119,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
   name: scrob-ingress
-  namespace: scrob-production
+  namespace: scrob-development
 spec:
   ingressClassName: public
   rules:
-  - host: scrob.hephy.pro
+  - host: scrob-dev.hephy.pro
     http:
       paths:
       - backend:
@@ -136,7 +134,7 @@ spec:
               number: 8080
         path: "/"
         pathType: Prefix
-  - host: scrob.hephy.pro
+  - host: scrob-dev.hephy.pro
     http:
       paths:
       - backend:
@@ -155,7 +153,7 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - scrob.hephy.pro
+    - scrob-dev.hephy.pro
     secretName: scrob-tls
 ---
 apiVersion: v1
@@ -165,7 +163,7 @@ metadata:
     app: scrob
     role: assets
   name: scrob-assets-svc
-  namespace: scrob-production
+  namespace: scrob-development
 spec:
   ports:
   - name: http
@@ -184,7 +182,7 @@ metadata:
     app: scrob
     role: assets
   name: scrob-assets-sa
-  namespace: scrob-production
+  namespace: scrob-development
 ---
 apiVersion: v1
 data:
@@ -227,7 +225,7 @@ data:
 kind: ConfigMap
 metadata:
   name: scrob-assets-nginx-config
-  namespace: scrob-production
+  namespace: scrob-development
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -236,7 +234,7 @@ metadata:
     app: scrob
     role: assets
   name: scrob-assets
-  namespace: scrob-production
+  namespace: scrob-development
 spec:
   replicas: 1
   selector:
@@ -255,7 +253,7 @@ spec:
         role: assets
     spec:
       containers:
-      - image: img.hephy.pro/scrob/web:20220724115016-assets
+      - image: img.hephy.pro/scrob/web:20220724215619-assets
         imagePullPolicy: IfNotPresent
         name: scrob-assets
         ports:

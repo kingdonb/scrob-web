@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/kingdonb/kuby-cert-manager.git
-  revision: 3cd49302ccd26aeb0272b0b56274d0cceba104f3
+  revision: db9f4b2a18f4d4d4e429a1d428eac8238d0ec374
   specs:
     kuby-cert-manager (0.4.0)
       helm-cli (~> 0.1)
@@ -400,7 +400,7 @@ GEM
     statsd-instrument (3.0.2)
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
-    strscan (3.0.3)
+    strscan (3.0.4)
     thor (1.2.1)
     timeout (0.3.0)
     to_regexp (0.2.1)

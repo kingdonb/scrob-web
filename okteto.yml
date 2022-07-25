@@ -9,7 +9,7 @@ environment:
 sync:
 - .:/usr/src/app
 forward:
-- 1234:1234
+- 12345:12345
 - 8080:8080
 persistentVolume:
   enabled: true
