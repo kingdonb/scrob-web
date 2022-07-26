@@ -13,6 +13,7 @@ class FooController < ApplicationController
 
     @csv = @s.to_csv
 
+    #
     # n = 30  # year = 2021
     # @records  = @w[n].records.ai(html: true)
     # @title    = @w[n].ws_title
