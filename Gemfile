@@ -68,6 +68,12 @@ group :development, :test do
   gem 'rspec', '~> 3.5'
 end
 
+group :test do
+  gem 'cucumber-rails', require: false
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
+end
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
