@@ -24,7 +24,7 @@ end
 
 def with_retries
   max_retries = 8
-  retries = 0
+  retries ||= 0
   if retries > @high_water_retries
     @high_water_retries = retries
   end
@@ -33,6 +33,7 @@ def with_retries
 
   return ret
 rescue Google::Apis::RateLimitError => e
+  puts "Rate limited (#{retries})"
   if retries <= max_retries
     retries += 1; @overall_retries += 1
     max_sleep_seconds = Float(2 ** retries)
@@ -82,9 +83,9 @@ When('the site name is located on a numbered tab') do
       dont_filter_here = false
 
       # FIXME: In the finished program, we should not filter here...
-      if tab_label_number == "5" # ||
-        # tab_label_number == "25" ||
-        # tab_label_number == "30" || dont_filter_here
+      if tab_label_number == "5" ||
+        tab_label_number == "25" ||
+        tab_label_number == "30" || dont_filter_here
         parse_tab_label_via_regex(tab_label_number, tab_index)
       else
         nil
@@ -114,10 +115,13 @@ def variable_list(tab_index)
 end
 
 When('the numbered tabs all contain different variables in each row') do
+  @site_variables = {}
   @site_map.each do |h|
-    l = variable_list(h[:tab_index])
-    labels = l.map{|ls| ls[:l]}
+    tab_index = h[:tab_index]
+    @site_variables[tab_index] = l = variable_list(tab_index)
     expect(l).to include({l: "Sampling Date", row_index: 1})
+
+    labels = l.map{|ls| ls[:l]}
     expect(labels).to include("Sampling Date")
     expect(labels).to include("TKN Loading")
     expect(labels).to include("D.O.")
@@ -125,14 +129,66 @@ When('the numbered tabs all contain different variables in each row') do
   end
 end
 
+def record_list(tab_index, variables)
+  records = []
+  rows = with_retries { ws(tab_index).rows }
+
+  # Col 0 is the variable label column and has already been read
+  # Col 1 is the first data record and the first data value is Sampling Date
+  (1..).map do |n|
+    record = {}
+    sampling_date_row_key = variables.filter {|v| v[:l] == "Sampling Date"}.first
+    sampling_date_row = rows[sampling_date_row_key[:row_index]]
+
+    sampling_date = sampling_date_row[n]
+    # puts "Scanned and found sampling date: '#{sampling_date}'"
+    record[:sampling_date] = sampling_date
+    record[:col_index] = n
+    if record[:sampling_date].nil?
+      # The last column was read before a record that has a blank in Sampling Date
+      break
+    else
+      records << record
+    end
+  end
+
+  puts "Records for Tab #{tab_index} were all prepared (records.size is #{records.size})"
+
+  # binding.pry
+  records.each do |record|
+    variables.each do |v|
+      variable_label = v[:l]
+
+      if variable_label == "Sampling Date"
+        # already copied this
+      else
+        col = record[:col_index]
+        row = v[:row_index]
+        record[variable_label] = rows[row][col]
+      end
+    end
+  end
+
+  records
+end
+
 When('the dates are column headers') do
+  @records = {}
+
+  @site_variables.each do |tab_index, variables|
+    @records = rs = record_list(tab_index, variables)
+
+    expect(rs.first).to have_key(:sampling_date)
+    records = [rs[5], rs[6], rs[7]]
+    records.each do |r|
+      expect(r[:sampling_date]).to match %r|\d+/\d+/\d{4}|
+    end
+  end
 
   puts "Stats"
   puts "----------------------"
   puts "Overall retries: #{@overall_retries}"
   puts "Retries high water: #{@high_water_retries}"
-
-  pending
 end
 
 When('the data is gathered from the many tabs into one list of records') do
