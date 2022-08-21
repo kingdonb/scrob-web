@@ -23,7 +23,7 @@ def ws(tab_index)
 end
 
 def with_retries
-  max_retries = 8
+  max_retries = 9
   retries ||= 0
   if retries > @high_water_retries
     @high_water_retries = retries
@@ -96,10 +96,13 @@ end
 
 def variable_list(tab_index)
   labels = []
+  rows = with_retries { ws(tab_index).rows }
+
+  # puts "Reading headers for Tab #{tab_index}"
   # Row 0 is the tab/top label row and has already been read before
   # Row 1 is Sampling Date row, and subsequent rows are variables
   (1..).map do |n|
-    variable_label = with_retries { ws(tab_index).rows[n][0] }
+    variable_label = with_retries { rows[n][0] }
 
     # Any row without a variable label is assumed to be an empty row
     if variable_label != ""
@@ -133,6 +136,7 @@ def record_list(tab_index, variables)
   records = []
   rows = with_retries { ws(tab_index).rows }
 
+  # puts "Reading variables for Tab #{tab_index}"
   # Col 0 is the variable label column and has already been read
   # Col 1 is the first data record and the first data value is Sampling Date
   (1..).map do |n|
@@ -184,15 +188,12 @@ When('the dates are column headers') do
       expect(r[:sampling_date]).to match %r|\d+/\d+/\d{4}|
     end
   end
-
-  puts "Stats"
-  puts "----------------------"
-  puts "Overall retries: #{@overall_retries}"
-  puts "Retries high water: #{@high_water_retries}"
 end
 
 When('the data is gathered from the many tabs into one list of records') do
-  pending # Write code here that turns the phrase above into concrete actions
+  # tl;dr: @records is joined to @site_map
+
+  binding.pry
 end
 
 When('the tabs labeled {string} and {string} can be ignored') do |string, string2|
