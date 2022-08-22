@@ -156,7 +156,7 @@ def record_list(tab_index, variables)
     # puts "Scanned and found sampling date: '#{sampling_date}'"
     record[:sampling_date] = sampling_date
     record[:col_index] = n
-    if record[:sampling_date].nil? || record[:sampling_date].trim == ""
+    if record[:sampling_date].nil? || record[:sampling_date].strip == ""
       # The last column was read before a record that has a blank in Sampling Date
       break
     else
@@ -200,7 +200,7 @@ When('the dates are column headers') do
     expect(rs.first).to have_key(:sampling_date)
     records = [rs[0]]
     records.each do |r|
-      expect(r[:sampling_date]).to match %r|\d+/\d+/\d{4}|
+      expect(r[:sampling_date]).to match %r|\d+/\d+/\d{2,4}|
     end
 
     rs.each {|r| @records << r}
