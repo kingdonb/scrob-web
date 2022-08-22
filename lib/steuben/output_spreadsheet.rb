@@ -59,10 +59,10 @@ module Steuben
       worksheets[output_sheet_index]
     end
 
-    def read_from(records)
+    def read_from(records, header_row)
       @ws = output_worksheet
 
-      records.first.keys.each_with_index do |key, key_idx|
+      header_row.each_with_index do |key, key_idx|
         @ws[1, key_idx+1] = key
         records.each_with_index do |r, idx|
           unless r[key].nil?

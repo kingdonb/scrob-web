@@ -140,6 +140,12 @@ When('the numbered tabs all contain different variables in each row') do
   end
 end
 
+def all_site_variables
+  s = Set.new
+  s.merge(@site_variables.values.map{|vs| vs.map{|v| v[:l]}}.flatten)
+  s
+end
+
 def record_list(tab_index, variables)
   records = []
   rows = with_retries { ws(tab_index).rows }
@@ -224,7 +230,7 @@ end
 Then('each record in the list is written into the output spreadsheet') do
   @output_sheet_id = '1DdNVaoRnVfcr3GhEw7nl3T8vK3bwTi9vjIuBS6N47-s'
   @os = Steuben::OutputSpreadsheet.new(google_sheet_id: @output_sheet_id)
-  @os.read_from(@records)
+  @os.read_from(@records, all_site_variables)
   @os.commit
 end
 
