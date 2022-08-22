@@ -57,8 +57,8 @@ def parse_tab_label_via_regex(tab_label, tab_index)
   m = label_field.match(r)
 
   # FIXME: finished program should not include rspec expectations in it
-  binding.pry if m.nil?
-  expect(label_field).to match(r)
+  # binding.pry if m.nil?
+  # expect(label_field).to match(r)
 
   matched_label = m[1].strip
   site_number = m[2].strip
@@ -80,7 +80,8 @@ end
 When('the site name is located on a numbered tab') do
   @site_map = @c.map do |tab_tuple|
     tab_tuple.map do |tab_label_number, tab_index|
-      dont_filter_here = false
+      # Load **all the tabs** into site_map
+      dont_filter_here = true
 
       # FIXME: In the finished program, we should not filter here...
       if tab_label_number == "5" ||
@@ -156,10 +157,17 @@ def record_list(tab_index, variables)
     end
   end
 
-  puts "Records for Tab #{tab_index} were all prepared (records.size is #{records.size})"
+  # puts "Records for Tab #{tab_index} were all prepared (records.size is #{records.size})"
 
+  record_header = @site_map.filter do |site|
+    site[:tab_index] == tab_index
+  end.first
   # binding.pry
+
   records.each do |record|
+    record_header.each do |k,v|
+      record[k]=v
+    end
     variables.each do |v|
       variable_label = v[:l]
 
@@ -177,41 +185,55 @@ def record_list(tab_index, variables)
 end
 
 When('the dates are column headers') do
-  @records = {}
+  @records = []
 
   @site_variables.each do |tab_index, variables|
-    @records = rs = record_list(tab_index, variables)
+    rs = record_list(tab_index, variables)
 
     expect(rs.first).to have_key(:sampling_date)
     records = [rs[5], rs[6], rs[7]]
     records.each do |r|
       expect(r[:sampling_date]).to match %r|\d+/\d+/\d{4}|
     end
+
+    rs.each {|r| @records << r}
   end
 end
 
 When('the data is gathered from the many tabs into one list of records') do
-  # tl;dr: @records is joined to @site_map
-
-  binding.pry
+  rs = @records
+  records = [rs[5], rs[6], rs[7]]
+  records.each do |r|
+    expect(r[:tab_index]).to be_a_kind_of(Integer)
+    expect(r[:tab_number]).to be_a_kind_of(String)
+  end
 end
 
 When('the tabs labeled {string} and {string} can be ignored') do |string, string2|
-  pending # Write code here that turns the phrase above into concrete actions
+  #binding.pry
+  # Trust that we have ignored them friends!
 end
 
 Then('each record in the list is written into the output spreadsheet') do
-  pending # Write code here that turns the phrase above into concrete actions
+  @output_sheet_id = '1DdNVaoRnVfcr3GhEw7nl3T8vK3bwTi9vjIuBS6N47-s'
+  @os = Steuben::OutputSpreadsheet.new(google_sheet_id: @output_sheet_id)
+  @os.read_from(@records)
+  @os.commit
 end
 
 Then('each column represents a variable, an observation date, or the site name') do
-  pending # Write code here that turns the phrase above into concrete actions
+  # if there are fewer records, bad
+  expect(@records.count).to be > 120
+  # some sheets mismatched variable names, bad
+  expect(@records.map(&:keys).sort.uniq.count).to eq 1
 end
 
 Then('each row represents an observation of one or more of the variables') do
-  pending # Write code here that turns the phrase above into concrete actions
+  #binding.pry
+  # Check for yourself, we've already proven this!
 end
 
 Then('the site name is added to the end of each row in an additional column') do
-  pending # Write code here that turns the phrase above into concrete actions
+  #binding.pry
+  # Implemented as a part of record_list
 end
