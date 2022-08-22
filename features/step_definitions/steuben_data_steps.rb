@@ -84,7 +84,7 @@ When('the site name is located on a numbered tab') do
   @site_map = @c.map do |tab_tuple|
     tab_tuple.map do |tab_label_number, tab_index|
       # Load **all the tabs** into site_map
-      dont_filter_here = false
+      dont_filter_here = true
 
       # FIXME: In the finished program, we should not filter here...
       if tab_label_number == "5" ||
