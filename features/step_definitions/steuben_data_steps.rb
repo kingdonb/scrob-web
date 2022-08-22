@@ -116,7 +116,7 @@ def variable_list(tab_index)
       if variable_label == "BDL= below detection limit"
         break # so we stop reading here, there's no more data rows
       end
-      labels << {row_index: n, l: variable_label}
+      labels << {row_index: n, l: variable_label.downcase.to_sym}
     end
   end
   labels
@@ -127,7 +127,7 @@ When('the numbered tabs all contain different variables in each row') do
   @site_map.each do |h|
     tab_index = h[:tab_index]
     @site_variables[tab_index] = l = variable_list(tab_index)
-    expect(l).to include({l: "Sampling Date", row_index: 1})
+    expect(l).to include({l: :sampling_date, row_index: 1})
 
     labels = l.map{|ls| ls[:l]}
     # if ! labels.include? "TKN Loading"
@@ -142,7 +142,9 @@ end
 
 def all_site_variables
   s = Set.new
-  s.merge(@site_variables.values.map{|vs| vs.map{|v| v[:l]}}.flatten)
+  s.merge(@site_variables.values.map{|vs|
+    vs.map{|v| v[:l].downcase.to_sym}
+  }.flatten)
   s
 end
 
@@ -155,7 +157,7 @@ def record_list(tab_index, variables)
   # Col 1 is the first data record and the first data value is Sampling Date
   (1..).map do |n|
     record = {}
-    sampling_date_row_key = variables.filter {|v| v[:l] == "Sampling Date"}.first
+    sampling_date_row_key = variables.filter {|v| v[:l] == :sampling_date}.first
     sampling_date_row = rows[sampling_date_row_key[:row_index]]
 
     sampling_date = sampling_date_row[n]
@@ -184,7 +186,9 @@ def record_list(tab_index, variables)
     variables.each do |v|
       variable_label = v[:l]
 
-      if variable_label == "Sampling Date"
+      # binding.pry
+      if variable_label == :sampling_date
+        # binding.pry
         # already copied this
       else
         col = record[:col_index]
@@ -227,10 +231,20 @@ When('the tabs labeled {string} and {string} can be ignored') do |string, string
   # Trust that we have ignored them friends!
 end
 
+def header_row
+  [ :tab_index,
+    :tab_number,
+    :inner_tab_number,
+    :site_number,
+    :site_label,
+    :sampling_date ] +
+  all_site_variables.to_a
+end
+
 Then('each record in the list is written into the output spreadsheet') do
   @output_sheet_id = '1DdNVaoRnVfcr3GhEw7nl3T8vK3bwTi9vjIuBS6N47-s'
   @os = Steuben::OutputSpreadsheet.new(google_sheet_id: @output_sheet_id)
-  @os.read_from(@records, all_site_variables)
+  @os.read_from(@records, header_row)
   @os.commit
 end
 
@@ -238,6 +252,7 @@ Then('each column represents a variable, an observation date, or the site name')
   # if there are fewer records, bad
   expect(@records.count).to be > 120
   # some sheets mismatched variable names, bad
+  binding.pry
   #expect(@records.map(&:keys).sort.uniq.count).to eq 1
   #       expected: 1
   #       got: 14
