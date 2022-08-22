@@ -19,7 +19,10 @@ Given('we have downloaded a spreadsheet full of many tabs of mostly similar data
 end
 
 def ws(tab_index)
-  @s.worksheets[tab_index]
+  @ws = [] if @ws.nil?
+  return @ws[tab_index] ||= with_retries do
+    @s.worksheets[tab_index]
+  end
 end
 
 def with_retries
@@ -44,10 +47,9 @@ rescue Google::Apis::RateLimitError => e
   end
 end
 
+
 def get_top_label(tab_index)
-  with_retries do
-    ws(tab_index)[1,1]
-  end
+  with_retries { ws(tab_index)[1,1] }
 end
 
 def parse_tab_label_via_regex(tab_label, tab_index)
@@ -68,7 +70,7 @@ def parse_tab_label_via_regex(tab_label, tab_index)
   # this expectation would not succeed! :(
   # expect(tab_label).to eq(matched_label)
 
-  puts "Got header for Tab #{tab_number}"
+  puts "Got header for Tab #{tab_label}"
   {
     tab_index: tab_index,
     tab_number: tab_label,
@@ -82,12 +84,13 @@ When('the site name is located on a numbered tab') do
   @site_map = @c.map do |tab_tuple|
     tab_tuple.map do |tab_label_number, tab_index|
       # Load **all the tabs** into site_map
-      dont_filter_here = true
+      dont_filter_here = false
 
       # FIXME: In the finished program, we should not filter here...
       if tab_label_number == "5" ||
-        tab_label_number == "25" ||
-        tab_label_number == "30" || dont_filter_here
+        tab_label_number == "6" ||
+        tab_label_number == "7" ||
+        tab_label_number == "8" || dont_filter_here
         parse_tab_label_via_regex(tab_label_number, tab_index)
       else
         nil
@@ -98,7 +101,7 @@ end
 
 def variable_list(tab_index)
   labels = []
-  rows = with_retries { ws(tab_index).rows }
+  rows = ws(tab_index).rows
 
   puts "Reading headers for Tab #{tab_index}"
   # Row 0 is the tab/top label row and has already been read before
@@ -153,7 +156,7 @@ def record_list(tab_index, variables)
     # puts "Scanned and found sampling date: '#{sampling_date}'"
     record[:sampling_date] = sampling_date
     record[:col_index] = n
-    if record[:sampling_date].nil?
+    if record[:sampling_date].nil? || record[:sampling_date].trim == ""
       # The last column was read before a record that has a blank in Sampling Date
       break
     else
@@ -195,7 +198,7 @@ When('the dates are column headers') do
     rs = record_list(tab_index, variables)
 
     expect(rs.first).to have_key(:sampling_date)
-    records = [rs[5], rs[6], rs[7]]
+    records = [rs[0]]
     records.each do |r|
       expect(r[:sampling_date]).to match %r|\d+/\d+/\d{4}|
     end
