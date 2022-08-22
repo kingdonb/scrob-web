@@ -127,7 +127,7 @@ When('the numbered tabs all contain different variables in each row') do
   @site_map.each do |h|
     tab_index = h[:tab_index]
     @site_variables[tab_index] = l = variable_list(tab_index)
-    expect(l).to include({l: :sampling_date, row_index: 1})
+    expect(l).to include({l: :"sampling date", row_index: 1})
 
     labels = l.map{|ls| ls[:l]}
     # if ! labels.include? "TKN Loading"
@@ -157,7 +157,8 @@ def record_list(tab_index, variables)
   # Col 1 is the first data record and the first data value is Sampling Date
   (1..).map do |n|
     record = {}
-    sampling_date_row_key = variables.filter {|v| v[:l] == :sampling_date}.first
+    # binding.pry
+    sampling_date_row_key = variables.filter {|v| v[:l] == :"sampling date"}.first
     sampling_date_row = rows[sampling_date_row_key[:row_index]]
 
     sampling_date = sampling_date_row[n]
@@ -187,7 +188,7 @@ def record_list(tab_index, variables)
       variable_label = v[:l]
 
       # binding.pry
-      if variable_label == :sampling_date
+      if variable_label == :"sampling date"
         # binding.pry
         # already copied this
       else
@@ -238,7 +239,7 @@ def header_row
     :site_number,
     :site_label,
     :sampling_date ] +
-  all_site_variables.to_a
+  (all_site_variables.to_a - [:"sampling date"])
 end
 
 Then('each record in the list is written into the output spreadsheet') do
