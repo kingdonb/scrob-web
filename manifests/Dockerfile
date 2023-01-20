@@ -1,4 +1,5 @@
-FROM ruby:3.1.2
+FROM node:12.14.1 AS nodejs
+FROM ruby:3.1.3
 WORKDIR /usr/src/app
 ENV RAILS_ENV=production
 ENV KUBY_ENV=production
@@ -8,7 +9,17 @@ RUN apt-get update -qq && \
   DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-utils && \
   DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends \
   ca-certificates
-RUN gem install bundler -v 2.3.4
+COPY --from=nodejs /usr/local/bin/node /usr/local/bin/node
+RUN wget https://github.com/yarnpkg/yarn/releases/download/v1.21.1/yarn-v1.21.1.tar.gz && \
+  yarnv=$(basename $(ls yarn-*.tar.gz | cut -d'-' -f 2) .tar.gz) && \
+  tar zxvf yarn-$yarnv.tar.gz -C /opt && \
+  mv /opt/yarn-$yarnv /opt/yarn && \
+  apt-get install -qq -y --no-install-recommends gnupg && \
+  wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --import && \
+  wget https://github.com/yarnpkg/yarn/releases/download/$yarnv/yarn-$yarnv.tar.gz.asc && \
+  gpg --verify yarn-$yarnv.tar.gz.asc
+ENV PATH=$PATH:/opt/yarn/bin
+RUN gem install bundler -v 2.4.4
 COPY Gemfile .
 COPY Gemfile.lock .
 ENV BUNDLE_WITHOUT='development test deploy'

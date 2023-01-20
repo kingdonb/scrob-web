@@ -40,7 +40,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    getkuby.io/dockerfile-checksum: 527ee0fe4dd047afc07738c03838c4fafbe4a4c2a012f9a30813d2a218953db3
+    getkuby.io/dockerfile-checksum: bd349f4be88427ccc5da9962717039c278e469d16ffaf59332d9fcf34ba2bf32
   labels:
     app: scrob
     role: web
@@ -69,7 +69,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220724115016
+        image: img.hephy.pro/scrob/web:20230120174613
         imagePullPolicy: IfNotPresent
         name: scrob-web
         ports:
@@ -99,7 +99,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220724115016
+        image: img.hephy.pro/scrob/web:20230120174613
         name: scrob-create-db
       - command:
         - bundle
@@ -111,7 +111,7 @@ spec:
             name: scrob-config
         - secretRef:
             name: scrob-secrets
-        image: img.hephy.pro/scrob/web:20220724115016
+        image: img.hephy.pro/scrob/web:20230120174613
         name: scrob-migrate-db
       restartPolicy: Always
       serviceAccountName: scrob-sa
@@ -119,8 +119,6 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
   name: scrob-ingress
   namespace: scrob-production
 spec:
@@ -255,7 +253,7 @@ spec:
         role: assets
     spec:
       containers:
-      - image: img.hephy.pro/scrob/web:20220724115016-assets
+      - image: img.hephy.pro/scrob/web:20230120174613-assets
         imagePullPolicy: IfNotPresent
         name: scrob-assets
         ports:
