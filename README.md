@@ -11,6 +11,8 @@ Things you may want to cover:
 
 * Ruby version
 
+3.1.3 - let's test!
+
 3.1.2 - seems to be working....
 
 To work with GitHub Actions as I have it configured, you should set up a
