@@ -2,6 +2,10 @@ require "active_support/core_ext/integer/time"
 require "securerandom"
 
 Rails.application.configure do
+  # Configure 'rails notes' to inspect Cucumber files
+  config.annotations.register_directories('features')
+  config.annotations.register_extensions('feature') { |tag| /#\s*(#{tag}):?\s*(.*)$/ }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Suggested here: https://github.com/paketo-buildpacks/rails-assets/issues/144#issuecomment-975613426
@@ -20,6 +24,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   config.hosts << "scrob.hephy.pro"
+  config.hosts << "scrob-dev.hephy.pro"
 
   # Do not eager load code on boot.
   config.eager_load = false

@@ -1,9 +1,9 @@
 require 'active_support/core_ext'
 require 'active_support/encrypted_configuration'
 
-# Define a production Kuby deploy environment
+# Define a development Kuby deploy environment
 Kuby.define('Scrob') do
-  environment(:production) do
+  environment(:development) do
     # Because the Rails environment isn't always loaded when
     # your Kuby config is loaded, provide access to Rails
     # credentials manually.
@@ -29,7 +29,7 @@ Kuby.define('Scrob') do
 
       # Add a plugin that facilitates deploying a Rails app.
       add_plugin :rails_app do
-        hostname 'scrob.hephy.pro'
+        hostname 'scrob-dev.hephy.pro'
 
         manage_database false
         ingress_class 'public'
@@ -38,6 +38,7 @@ Kuby.define('Scrob') do
           data do
             add 'RAILS_LOG_TO_STDOUT', 'yes'
             add 'DATABASE_URL', 'nulldb://nohost'
+            # add 'RAILS_ENV', 'development'
           end
         end
       end
