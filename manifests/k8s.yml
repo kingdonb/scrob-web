@@ -47,7 +47,7 @@ metadata:
   name: scrob-web
   namespace: scrob-production
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: scrob
