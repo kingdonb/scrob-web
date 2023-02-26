@@ -1,8 +1,8 @@
 FROM node:12.14.1 AS nodejs
 FROM ruby:3.1.3
 WORKDIR /usr/src/app
-ENV RAILS_ENV=production
-ENV KUBY_ENV=production
+ENV RAILS_ENV=development
+ENV KUBY_ENV=development
 ARG RAILS_MASTER_KEY
 RUN apt-get update -qq && \
   DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-transport-https && \
