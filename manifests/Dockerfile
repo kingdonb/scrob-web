@@ -1,8 +1,8 @@
 FROM node:12.14.1 AS nodejs
 FROM ruby:3.1.3
 WORKDIR /usr/src/app
-ENV RAILS_ENV=production
-ENV KUBY_ENV=production
+ENV RAILS_ENV=development
+ENV KUBY_ENV=development
 ARG RAILS_MASTER_KEY
 RUN apt-get update -qq && \
   DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-transport-https && \
@@ -19,7 +19,7 @@ RUN wget https://github.com/yarnpkg/yarn/releases/download/v1.21.1/yarn-v1.21.1.
   wget https://github.com/yarnpkg/yarn/releases/download/$yarnv/yarn-$yarnv.tar.gz.asc && \
   gpg --verify yarn-$yarnv.tar.gz.asc
 ENV PATH=$PATH:/opt/yarn/bin
-RUN gem install bundler -v 2.4.4
+RUN gem install bundler -v 2.4.7
 COPY Gemfile .
 COPY Gemfile.lock .
 ENV BUNDLE_WITHOUT='development test deploy'
