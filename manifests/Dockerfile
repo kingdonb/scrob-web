@@ -19,7 +19,7 @@ RUN wget https://github.com/yarnpkg/yarn/releases/download/v1.21.1/yarn-v1.21.1.
   wget https://github.com/yarnpkg/yarn/releases/download/$yarnv/yarn-$yarnv.tar.gz.asc && \
   gpg --verify yarn-$yarnv.tar.gz.asc
 ENV PATH=$PATH:/opt/yarn/bin
-RUN gem install bundler -v 2.4.4
+RUN gem install bundler -v 2.4.7
 COPY Gemfile .
 COPY Gemfile.lock .
 ENV BUNDLE_WITHOUT='development test deploy'
