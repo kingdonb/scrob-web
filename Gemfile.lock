@@ -251,6 +251,7 @@ GEM
     helm-cli (0.3.0)
       helm-rb (~> 0.1)
     helm-rb (0.2.1-arm64-darwin)
+    helm-rb (0.2.1-x86_64-linux)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -292,6 +293,7 @@ GEM
       recursive-open-struct (~> 1.1, >= 1.1.1)
       rest-client (~> 2.0)
     kubectl-rb (0.2.1-arm64-darwin)
+    kubectl-rb (0.2.1-x86_64-linux)
     kubernetes-cli (0.4.0)
       kubectl-rb (~> 0.2)
     kuby-kube-db (0.7.1)
@@ -335,6 +337,8 @@ GEM
     netrc (0.11.0)
     nio4r (2.5.8)
     nokogiri (1.14.2-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     ohey (1.0.0)
       wmi-lite (~> 1.0)
@@ -470,6 +474,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   activerecord-nulldb-adapter
